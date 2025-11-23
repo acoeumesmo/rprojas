@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: avalie
+    env: python
+    region: oregon
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    plan: free

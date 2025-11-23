@@ -1,0 +1,18 @@
+# Bibliotecas do Core da Aplicação Web (app.py)
+Flask
+gunicorn
+python-dotenv  # Boa prática para gerenciar FLASK_SECRET_KEY, embora não esteja explícito, é útil.
+
+# Bibliotecas de Web Scraping (Web Scraping.py)
+requests
+beautifulsoup4
+
+# Bibliotecas de Análise de Dados e Sentimento (entrada_saida_grafico_.py)
+pandas
+transformers
+emoji
+torch
+# Bibliotecas de Geração de Relatório em PDF (entrada_saida_grafico_.py)
+reportlab
+Pillow  # Para a função Image (logomarca)
+zoneinfo # Para datetime com fuso horário (necessário em alguns ambientes)

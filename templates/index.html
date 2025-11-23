@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Enviar avaliação{% endblock %}
+{% block content %}
+
+<!-- CARROSSEL -->
+
+<section id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+
+  <div class="carousel-inner">
+
+    <!-- Slide 1 -->
+    <div class="carousel-item active hero-image-1">
+      <div class="overlay"></div> <!-- camada escura sobre a imagem -->
+      <div class="carousel-caption text-center">
+        <h1 class="fw-bold display-4">Texto 💬</h1>
+        <p class="lead">texto</p>
+        <a href="#form-section" class="btn btn-light btn-lg fw-semibold">Avalie</a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item hero-image-2">
+      <div class="overlay"></div>
+      <div class="carousel-caption text-center">
+        <h1 class="fw-bold display-4">Texto 📨</h1>
+        <p class="lead">texto</p>
+        <a href="#form-section" class="btn btn-light btn-lg fw-semibold">Avalie</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item hero-image-3">
+      <div class="overlay"></div>
+      <div class="carousel-caption text-center">
+        <h1 class="fw-bold display-4">Texto 🤝</h1>
+        <p class="lead">texto</p>
+        <a href="#form-section" class="btn btn-light btn-lg fw-semibold">Avalie</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botões de navegação do carrossel -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  </button>
+</section>
+
+<!-- FORMULÁRIO -->
+
+<section id="form-section" class="container my-5" style="max-width: 600px;">
+  <div class="card shadow-lg p-4">
+    <h2 class="text-center mb-4 text-primary fw-bold">Envie sua avaliação</h2>
+    <form action="{{ url_for('submit') }}" method="post" novalidate>
+      <!-- Campo Nome -->
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome *</label>
+        <input type="text" class="form-control" id="nome" name="nome" required>
+      </div>
+
+      <!-- Campo Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email *</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+
+      <!-- Campo Descrição -->
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição *</label>
+        <textarea class="form-control" id="descricao" name="descricao" rows="4" required></textarea>
+      </div>
+
+      <!-- Botão Enviar -->
+      <button type="submit" class="btn btn-primary w-100">Enviar</button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
