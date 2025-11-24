@@ -14,6 +14,8 @@ from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 import os
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+#os.environ["CUDA_VISIBLE_DEVICES"] = ""
 import re
 import emoji
 
@@ -22,7 +24,7 @@ def analise_sentimento():
 
     # Configurações
     ## Arquivo CSV retirado localmente 
-    NOME_ARQUIVO_CSV = 'analise/quotes.csv'
+    NOME_ARQUIVO_CSV = 'quotes.csv'
     COLUNA_AVALIACOES = 'Texto'
 
     # Nome dinâmico do PDF
@@ -36,7 +38,7 @@ def analise_sentimento():
     NOME_ARQUIVO_PDF = f'relatorio_sentimento_{timestamp}.pdf'
 
     # Logomarca
-    CAMINHO_LOGOMARCA = 'logo_soulcare.jpeg'
+    CAMINHO_LOGOMARCA = 'logo_soulcare.png'
     LARGURA_LOGOMARCA = 40
     ALTURA_LOGOMARCA = 40
 
@@ -148,7 +150,7 @@ def analise_sentimento():
                 row['Confianca_Texto'],
                 "Texto"
             ])
-
+    # Aplica a nova lógica para criar as colunas FINAIS
     df[['Sentimento', 'Estrelas_Preditas', 'Confianca', 'Modelo_Escolhido']] = df.apply(
         escolher_melhor_analise,
         axis=1
@@ -156,7 +158,7 @@ def analise_sentimento():
 
     
     # Salva pro dashboard
-    df.to_csv("analise/analise.csv", index=False, encoding="utf-8")
+    df.to_csv("analise.csv", index=False, encoding="utf-8")
 
     # Gera o PDF
     # funções internas do PDF
@@ -168,7 +170,7 @@ def analise_sentimento():
         header_text = f"Soulcare - Grupo 4"
 
         try:
-            header_picture = Image(CAMINHO_LOGOMARCA, width=50, height=50)
+            header_picture = Image(CAMINHO_LOGOMARCA, width=40, height=40)
             header_picture.drawOn(canvas, doc.leftMargin, page_height - 0.75 * inch)
         except:
             pass
@@ -219,9 +221,11 @@ def analise_sentimento():
 
     doc.build(elements, onFirstPage=myFirstPage, onLaterPages=myLaterPages)
 
-    # Volta pro flask
-    return {
-        "status": "ok",
-        "pdf": NOME_ARQUIVO_PDF,
-        "total": len(df)
-    }
+    # Opcional: salva CSV consolidado para inspeção
+    try:
+        df.to_csv("analise.csv", index=False, encoding="utf-8")
+    except Exception as e:
+        print(f"AVISO: não foi possível salvar analise.csv: {e}")
+
+    # Volta pro Flask: caminho do PDF + DataFrame
+    return NOME_ARQUIVO_PDF, df
